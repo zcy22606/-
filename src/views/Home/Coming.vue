@@ -1,0 +1,154 @@
+<template>
+  <div>
+    <ul>
+      <li v-for="data in dataList" :key="data.filmId" @click="handleClick(data.filmId)">
+        <div class="info-img"><img :src="data.poster" :alt="data.name"></div>
+        <div class="info-all">
+          <div class="info-name"><span class="name">{{data.name}}</span><span class="item">{{data.item.name}}</span></div>
+          <p class="info-actors">主演：{{data.actors | actorFilter}}</p>
+          <p class="info-time">{{data.nation}} | {{data.runtime}}分钟</p>
+          <p class="coming-date">上映日期：{{data.premiereAt | dateFilter}}</p>
+        </div>
+        <div class="home-buy">预购</div>
+      </li>
+    </ul>
+  </div>
+</template>
+<script>
+import axios from 'axios'
+import Vue from 'vue'
+import moment from 'moment'
+Vue.filter('dateFilter', (date) => {
+  moment.locale('zh-cn')
+  return moment(date * 1000).format('dddd' + ' ' + 'MM-DD')
+})
+Vue.filter('actorFilter', (actors) => {
+  // console.log(actors)
+  return actors.map(item => item.name).join(' ')
+})
+Vue.filter('pointFilter', (point) => {
+  if (point === undefined) return '暂无评分'
+  return point
+})
+export default {
+  data () {
+    return {
+      dataList: []
+    }
+  },
+  methods: {
+    handleClick (id) {
+      this.$router.push(`/data/${id}`)
+      // this.$router.push({
+      //   name: 'Databb',
+      //   params: {
+      //     myid: id
+      //   }
+      // })
+      // this.$router.push(`/data?myid=${id}`)
+    }
+  },
+  mounted () {
+    axios({
+      url: 'https://m.maizuo.com/gateway?cityId=110100&pageNum=1&pageSize=10&type=2&k=5523835',
+      headers: {
+        'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"161130720666340064854017","bc":"110100"}',
+        'X-Host': 'mall.film-ticket.film.list'
+      }
+    }).then(
+      res => {
+        this.dataList = res.data.data.films
+        // console.log(res)
+      }
+    )
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  ul{
+    list-style: none;
+    box-sizing: border-box;
+    margin-left: 15px;
+    li{
+      height: 94px;
+      padding: 15px 0px 15px 0;
+      cursor: pointer;
+      border-bottom: 1px solid #ededed;
+      .info-img{
+        width: 66px;
+        height: 94px;
+        float: left;
+        position: relative;
+        overflow: hidden;
+        top: 0;
+        img{
+          width: 100%;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          border-radius: 2px;
+          transform: translateY(-50%);
+          // z-index: -9999
+        }
+      }
+      .info-all{
+        width: calc(100% - 145px);
+        float: left;
+        padding: 0 0px 0 10px;
+        font-size: 13px;
+        .info-name{
+          width: calc(100% - 116px);
+          white-space: nowrap;
+          margin-top: 2px;
+          .name{
+            font-size: 16px;
+            height: 22px;
+            margin-right: 5px;
+            color: black;
+            font-weight: bold;
+            width: calc(100% - 25px);
+          }
+          .item{
+            font-size: 9px;
+            color: white;
+            background-color: #d2d6dc;
+            height: 14px;
+            padding: 0 2px;
+            border-radius: 2px;
+          }
+        }
+        .info-actors{
+          margin-top: 4px;
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow:ellipsis;
+        }
+        .info-time{
+          margin-top: 4px;
+        }
+        .coming-date{
+          margin-top: 4px;
+        }
+      }
+      .home-buy{
+        float: right;
+        margin-right: 15px;
+        height: 25px;
+        width: 50px;
+        color: #ff5f16;
+        line-height: 25px;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 2px;
+        border: 1px solid #ff5f16;
+        margin-top: 35px;
+      }
+    }
+  }
+</style>
