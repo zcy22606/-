@@ -1,18 +1,18 @@
 <template>
   <transition name="fade" appear>
     <div>
-      <div v-if="dataList">
+      <div v-if="dataList" :class="showPhoto ? '' : 'show'">
         <div class="main">
           <div class="film">
-            <div class="film-header" v-top>
+            <div class="film-header" v-top v-show="!showPhoto">
               <div class="goBack" @click="back">
                 <img src="data:image/png;base64,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" alt="">
               </div>
-              <div class="title">{{dataList.name}}</div>
+              <div class="title" v-show="!showPhoto">{{dataList.name}}</div>
             </div>
             <div class="film-img">
               <div class="data-img">
-                <img :src="dataList.poster" alt="">
+                <img :src="dataList.poster" @click="handleTitleImg">
               </div>
             </div>
             <div class="film-info">
@@ -47,7 +47,7 @@
               </div>
             </div>
             <div class="film-photos">
-              <div class="film-photos-title"><span class="title-name">剧照</span><span>全部({{dataList.photos.length}})</span></div>
+              <div class="film-photos-title"><span class="title-name">剧照</span><span class="title-photos-all" @click="showPhoto=!showPhoto">全部({{dataList.photos.length}})<i class="iconfont icon-guanbi"></i></span></div>
               <div class="film-photos-img">
                 <div class="film-photos-box">
                   <ul class="film-photos-ul">
@@ -61,6 +61,17 @@
               </div>
             </div>
             <div class="gobuy"><div class="gobuy-box"><div class="gobuy-text">选座购票</div></div></div>
+            <div class="photo-title" v-show="showPhoto">
+              <div class="goBack" @click="showPhoto=!showPhoto">
+                <img src="data:image/png;base64,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" alt="">
+              </div>
+              <div class="title" v-show="showPhoto">剧照({{dataList.photos.length}})</div>
+            </div>
+            <div v-show="showPhoto" class="album-zone">
+              <ul class="all-photos">
+                <li v-for="(data,index) in dataList.photos" :key="index"><img :src="data" alt="" class="all-photos-item" @click="handleImg(index)"></li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -69,15 +80,13 @@
 </template>
 
 <style lang="scss" scoped>
+  $master_color:#ff5f16;
+  $line: 1px solid #ededed;
   *{margin: 0;padding: 0;}
   img{display: block;}
   ul{list-style: none;}
   .main{height: 100%;}
-  .film{
-    // transform: none !important;
-    background-color: black;
-    display: inline;
-    .film-header{position: fixed;background-color: hsla(0, 0%, 100%, 0);color: transparent;width: 100vw;height: 44px;z-index: 1;
+  .film-header{position: fixed;background-color: hsla(0, 0%, 100%, 0);color: transparent;width: 100vw;height: 44px;z-index: 1;
       .goBack{
         height: 30px;position: absolute;top: 5px;left: 5px;
         img{width: 30px;}
@@ -92,6 +101,25 @@
         img{width: 100%;position: absolute;top: 50%;left: 0;transform: translateY(-50%);}
       }
     }
+    .photo-title{position: fixed;width: 100vw;height: 44px;top:0;background-color: #fff;
+      .goBack{
+        height: 30px;position: absolute;top: 5px;left: 5px;
+        img{width: 30px;}
+      }
+      .title{
+        font-size: 17px;line-height: 44px;width: 100vw;text-align: center;
+        }
+    }
+    .show-film-header{transition: all .3s ease;background-color: #fff;color: #191a1b;}
+    .film-img{width: 100%;background-color: white;
+      .data-img{width: 100%;position: relative;overflow: hidden;top: 0;height: 56vw;
+        img{width: 100%;position: absolute;top: 50%;left: 0;transform: translateY(-50%);}
+      }
+    }
+  .film{
+    // transform: none !important;
+    background-color: black;
+    display: inline;
     .film-info{
       .film-text{
         font-size: 13px;color: #797d82;margin-top: 4px;
@@ -237,6 +265,10 @@
           font-size: 13px;
           justify-self:flex-end;
           color: #797d82;
+          i{
+            font-size: 10px;
+            padding-left: 4px;
+          }
         }
       }
       .film-photos-box{
@@ -304,6 +336,35 @@
       }
     }
   }
+  .album-zone{
+        position: fixed;
+        top: 44px;
+        left: 0;
+        overflow-y: auto;
+        background-color: #fff;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        // height: 100%;
+        .all-photos{
+          display: flex;
+          align-content: center;
+          flex-wrap: wrap;
+          width: 100%;
+          .all-photos-item{
+            width: calc(33.33333vw - 1px);
+            height: calc(33.33333vw - 1px);
+            margin-bottom: 1px;
+            padding-right: 1px;
+            img{
+              width: 100%;
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+          }
+        }
+      }
   .actors-list::-webkit-scrollbar{
     display: none;
   }
@@ -343,6 +404,11 @@ Vue.directive('top', {
         el.classList.remove('show-film-header')
       }
     }
+    if (document.querySelector('.album-zone').style.display !== 'none') {
+      el.classList.add('show-film-header')
+    } else {
+      el.classList.remove('show-film-header')
+    }
   },
   unbind () {
     window.onscroll = null
@@ -354,7 +420,8 @@ export default {
       id: '',
       dataList: null,
       hiden: true,
-      isShow: true
+      isShow: true,
+      showPhoto: false
     }
   },
   mounted () {
@@ -375,7 +442,19 @@ export default {
       this.$router.go(-1) // 返回上一层
     },
     handleImg (index) {
-      ImagePreview(['https://img01.yzcdn.cn/vant/apple-1.jpg'])
+      ImagePreview({
+        images: this.dataList.photos,
+        startPosition: index,
+        closeable: true
+      })
+    },
+    handleTitleImg () {
+      const imgs = []
+      imgs.push(this.dataList.poster)
+      ImagePreview({
+        images: imgs,
+        closeable: true
+      })
     }
     // handleClick (el) {
     //   this.hiden = !this.hiden

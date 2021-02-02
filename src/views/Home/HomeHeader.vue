@@ -56,6 +56,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$master_color:#ff5f16;
+$line: 1px solid #ededed;
 *{margin: 0;padding: 0;}
   ul{
     list-style: none;
@@ -78,6 +80,7 @@ export default {
     color: #191a1b;
     border-bottom: 1px solid #ededed;
     cursor: pointer;
+    font-size: 14px;
   }
   .tab-bar{
     position: absolute;
@@ -87,7 +90,7 @@ export default {
     left: 0;
     transition: transform .2s cubic-bezier(.35,0,.25,1),-webkit-transform .2s cubic-bezier(.35,0,.25,1);
     span{
-      border-bottom: 2px solid #ff5f16;
+      border-bottom: 2px solid $master_color;
       border-radius: 20px;
       display: block;
       width: 56px;
@@ -99,6 +102,6 @@ export default {
   //   }
   .hhh{
     // border-bottom: #ff5f16 2px solid;
-    color: #ff5f16;
+    color: $master_color;
   }
 </style>

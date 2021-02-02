@@ -13,6 +13,8 @@
   </div>
 </template>
 <style lang="scss" scoped>
+  $master_color:#ff5f16;
+  $line: 1px solid #ededed;
   // *{margin: 0;padding: 0;}
   // .banner{background-color: red;width: 100%;height: 400px;}
   // ul{

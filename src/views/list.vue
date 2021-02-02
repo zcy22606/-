@@ -87,6 +87,8 @@ export default {
   //     opacity: 0;
   //     transform: translateY(20px);
   // }
+  $master_color:#ff5f16;
+  $line: 1px solid #ededed;
   a{
     color: #797d82;
     text-decoration: none;
@@ -119,7 +121,7 @@ export default {
               width: 70px;text-align: center;display: flex;flex-direction: column;
               .cinema-price{
                 font-size: 15px;
-                color: #ff5f16;
+                color: $master_color;
                 i{
                   font-size: 11px;
                   font-style: normal;

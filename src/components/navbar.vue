@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss" scoped>
-  $master_color:red;
+  $master_color:#ff5f16;
   $line: 1px solid #ededed;
   *{
     margin: 0;
