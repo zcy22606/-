@@ -382,7 +382,7 @@
 </style>
 
 <script>
-import axios from 'axios'
+import http from '../util/util.js'
 import Vue from 'vue'
 import moment from 'moment'
 import { ImagePreview } from 'vant'
@@ -426,10 +426,9 @@ export default {
   },
   mounted () {
     this.id = this.$route.params.myid
-    axios({
-      url: `https://m.maizuo.com/gateway?filmId=${this.id}&k=5391545`,
+    http({
+      url: `gateway?filmId=${this.id}&k=5391545`,
       headers: {
-        'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"161130720666340064854017","bc":"110100"}',
         'X-Host': 'mall.film-ticket.film.info'
       }
     }).then(res => {

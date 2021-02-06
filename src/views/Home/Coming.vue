@@ -23,8 +23,9 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import http from '../../util/util.js'
 import Vue from 'vue'
+import { mapState } from 'vuex'
 import moment from 'moment'
 import { List, Cell, PullRefresh } from 'vant'
 Vue.use(List).use(Cell).use(PullRefresh)// 全局注册
@@ -51,6 +52,9 @@ export default {
       total: 0, // 总数据长度
       refreshing: false
     }
+  },
+  computed: {
+    ...mapState('CityModule', ['cityName', 'cityId'])
   },
   methods: {
     handleClick (id) {
@@ -79,10 +83,9 @@ export default {
       // 3. this.loading=false
 
       this.current++
-      axios({
-        url: `https://m.maizuo.com/gateway?cityId=110100&pageNum=${this.current}&pageSize=10&type=2&k=5523835`,
+      http({
+        url: `gateway?cityId=${this.cityId}&pageNum=${this.current}&pageSize=10&type=2&k=5523835`,
         headers: {
-          'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"1596502176387264316178433","bc":"310100"}',
           'X-Host': 'mall.film-ticket.film.list'
         }
       }).then(res => {
@@ -111,10 +114,9 @@ export default {
   },
   mounted () {
     this.loading = true
-    axios({
-      url: 'https://m.maizuo.com/gateway?cityId=110100&pageNum=1&pageSize=10&type=2&k=5523835',
+    http({
+      url: `gateway?cityId=${this.cityId}&pageNum=1&pageSize=10&type=2&k=5523835`,
       headers: {
-        'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"161130720666340064854017","bc":"110100"}',
         'X-Host': 'mall.film-ticket.film.list'
       }
     }).then(

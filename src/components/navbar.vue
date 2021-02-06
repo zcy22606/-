@@ -2,7 +2,7 @@
   <div>
     <ul>
       <router-link to="/Home" tag="li" active-class="active"><i class="iconfont icon-weidianying"></i><p>电影</p></router-link>
-      <router-link to="/List" tag="li" active-class="active"><i class="iconfont icon-yingyuan" ></i><p>影院</p></router-link>
+      <router-link to="/Cinema" tag="li" active-class="active"><i class="iconfont icon-yingyuan" ></i><p>影院</p></router-link>
       <router-link to="/information" tag="li" active-class="active"><i class="iconfont icon-zixun" ></i><p>资讯</p></router-link>
       <router-link to="/About" tag="li" active-class="active"><i class="iconfont icon-biaoqiankuozhan_wode-310"></i><p>我的</p></router-link>
     </ul>

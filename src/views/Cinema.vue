@@ -2,32 +2,37 @@
     <div>
         <navbar></navbar>
        <!-- <transition name="fade" appear > -->
-         <div class="main" v-if="dataList">
-          <headerbar left="北京" center="影院" right="iconfont icon-sousuo"></headerbar>
-          <headerbottom left="全城" center="APP订票" right="最近去过"></headerbottom>
-          <div class="cinema-layer"></div>
-          <div class="cinema" :style="{height:height}">
-              <ul class="cinema-list">
-                <li v-for="data in dataList" :key="data.cinemaId" class="cinema-list-item">
-                  <a href="" class="cinema-item">
-                    <div class="cinema-info-na"><span class="cinema-name">{{data.name}}</span><span class="cinema-address">{{data.address}}</span></div>
-                    <div class="cinema-info-pd"><span class="cinema-price"><i>￥</i>{{data.lowPrice | priceFilter}}<span>起</span></span><span class="cinema-distance">距离未知</span></div>
-                  </a>
-                </li>
-              </ul>
-          </div>
-         </div>
+            <div class="main" v-if="this.cinemaList">
+              <headerbar :left="this.cityName" center="影院" right="iconfont icon-sousuo" @click-left="handleLeft()"></headerbar>
+              <headerbottom left="全城" center="APP订票" right="最近去过"></headerbottom>
+              <div class="cinema-layer"></div>
+              <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
+                <div class="cinema" :style="{height:height}">
+                    <ul class="cinema-list">
+                      <li v-for="data in this.cinemaList" :key="data.cinemaId" class="cinema-list-item">
+                        <a href="" class="cinema-item">
+                          <div class="cinema-info-na"><span class="cinema-name">{{data.name}}</span><span class="cinema-address">{{data.address}}</span></div>
+                          <div class="cinema-info-pd"><span class="cinema-price"><i>￥</i>{{data.lowPrice | priceFilter}}<span>起</span></span><span class="cinema-distance">距离未知</span></div>
+                        </a>
+                      </li>
+                    </ul>
+                </div>
+              </van-pull-refresh>
+            </div>
        <!-- </transition> -->
     </div>
 </template>
 
 <script>
 import navbar from '../components/navbar'
-import axios from 'axios'
+// import http from '../util/util.js'
 import BetterScroll from 'better-scroll'
 import headerbar from '../components/headerbar'
 import headerbottom from '../components/headerbottom'
+import { PullRefresh } from 'vant'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import Vue from 'vue'
+Vue.use(PullRefresh)
 Vue.filter('priceFilter', data => {
   const price = (data / 100).toFixed(1)
   if (price.endsWith('0')) {
@@ -47,8 +52,9 @@ Vue.filter('priceFilter', data => {
 export default {
   data () {
     return {
-      dataList: null,
-      height: 0
+      height: 0,
+      isLoading: false
+      // dataList: []
     }
   },
   components: {
@@ -56,15 +62,36 @@ export default {
     headerbar,
     headerbottom
   },
+  computed: {
+    ...mapState('CityModule', ['cityName', 'cityId']),
+    ...mapState('CinemaModule', ['cinemaList'])
+  },
+  methods: {
+    ...mapActions('CinemaModule', ['getCinemaList']),
+    ...mapMutations('CinemaModule', ['clearCinemaList']),
+    onRefresh () {
+      this.isLoading = false
+    },
+    handleLeft () {
+      // console.log('我执行了')
+      this.$router.push('/Cinema/City')
+      this.clearCinemaList()
+    }
+  },
   mounted () {
-    axios({
-      url: 'https://m.maizuo.com/gateway?cityId=110100&ticketFlag=1&k=6051222',
-      headers: {
-        'X-Client-Info': '{"a":"3000","ch":"1002","v":"5.0.4","e":"161130720666340064854017","bc":"110100"}',
-        'X-Host': 'mall.film-ticket.cinema.list'
-      }
-    }).then(res => {
-      this.dataList = res.data.data.cinemas
+    if (this.cinemaList.length === 0) {
+      // console.log(this.cityName)
+      this.getCinemaList(this.cityId).then(res => {
+        this.$nextTick(() => {
+          new BetterScroll('.cinema', {
+            scrollbar: {
+              fade: true
+            }
+          })
+        })
+      })
+    } else {
+      // console.log('缓存')
       this.$nextTick(() => {
         new BetterScroll('.cinema', {
           scrollbar: {
@@ -72,7 +99,7 @@ export default {
           }
         })
       })
-    })
+    }
     this.height = (document.documentElement.clientHeight || document.body.clientHeight) - 100 + 'px'
   }
 }
@@ -98,9 +125,12 @@ export default {
       padding-top: 94px;
     }
     .cinema{
-      overflow: hidden;background-color: #fff;padding-bottom: 50px;box-sizing: border-box; position: relative;
+      // padding-top: 94px;
+      overflow: hidden;background-color: #fff;box-sizing: border-box; position: relative;
       .cinema-list{
+        padding-bottom: 50px;
         // list-style: none;
+        // margin-bottom: 100px;
         .cinema-list-item{
           position: relative;background-color: #fff;padding: 15px;
           .cinema-item{

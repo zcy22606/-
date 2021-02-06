@@ -2,7 +2,7 @@
   <div>
     <div class="swiper-container" id="swiper1">
       <div class="swiper-wrapper banner">
-        <div class="swiper-slide" v-for="(data,index) in swiperBanner" :key="index"><img :src="data" alt=""></div>
+        <div class="swiper-slide" v-for="(data,index) in swiperBanner" :key="index"><img :src="data" alt="" @click="swiperMessage"></div>
       </div>
   <!-- If we need pagination -->
       <!-- <div class="swiper-pagination"></div> -->
@@ -12,12 +12,19 @@
       <!-- If we need scrollbar -->
       <!-- <div class="swiper-scrollbar"></div> -->
     </div>
+    <van-dialog v-model="show" title="请扫描二维码" show-cancel-button confirm-button-text="我会联系你的" cancel-button-text="我对你不感兴趣">
+      <img src="../../../public/imgs/wx.jpg" style="width:200px;height:200px;margin-left:50%; transform:translateX(-100px); margin-top:20px;"/>
+    </van-dialog>
   </div>
 </template>
 
 <script>
 import Swiper from 'swiper/bundle'
 import 'swiper/swiper-bundle.css'
+import { Dialog } from 'vant'
+import Vue from 'vue'
+Vue.use(Dialog)
+
 export default {
   data () {
     return {
@@ -32,7 +39,13 @@ export default {
         'https://img.zcool.cn/community/01b1825bd95fa7a8012092526af66e.jpg@1280w_1l_2o_100sh.jpg',
         'https://img.zcool.cn/community/013f555bd95faba8012092520d14a9.jpg@1280w_1l_2o_100sh.jpg',
         'https://img.zcool.cn/community/012dad5bd95fbba8012092527ffa16.jpg@1280w_1l_2o_100sh.jpg'
-      ]
+      ],
+      show: false
+    }
+  },
+  methods: {
+    swiperMessage () {
+      this.show = true
     }
   },
   mounted () {

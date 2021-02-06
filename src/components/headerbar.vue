@@ -2,7 +2,7 @@
   <div>
     <header>
       <ul class="title">
-        <li class="title-left">{{left}} <span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAAXNSR0IArs4c6QAAAUdJREFUKBWNUcFKw0AQnUkQm2q2t0SzDXjIB3jx6NEfUI9ePEov6m946ElEEAQPnoqfIIjH+hOhTQTBFAzYg23GmbQbYkBxYJmd9+ZNZl9srcNzV6mB66ot3/cesyybwz8iiqLVVqvdZ+2NUi5hoLsJEQWlFnFoAe0nSTL+a5bWulsAPgDRjvQhYso6uK5ETBQEL5thuFthjYtw0mOGlDTPsPP840l1Ou8IuMegzWcdAY5ct5MxN6zPCYKwh0D3jCnBeZMvtPA0TcYXrFlEucW8GHDlGQwRbtuOcyL153R6RQTHhuP8BrZ1+DoaPQtWDZKi+XbB+LOLrZZ+GKzppTylipzfsuF7d7PZrMvg9pLQnOWUIVuuOc5BHMcTg0n+sVGdED8Aqc9/dKVsZD+A8CxNR5f1PnP/dZA0iG9YUCkkC3vGDyOu52+oeXRJEaIhBQAAAABJRU5ErkJggg==" alt=""></span></li>
+        <li class="title-left" @click="showCities">{{left}} <span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAJCAYAAAA/33wPAAAAAXNSR0IArs4c6QAAAUdJREFUKBWNUcFKw0AQnUkQm2q2t0SzDXjIB3jx6NEfUI9ePEov6m946ElEEAQPnoqfIIjH+hOhTQTBFAzYg23GmbQbYkBxYJmd9+ZNZl9srcNzV6mB66ot3/cesyybwz8iiqLVVqvdZ+2NUi5hoLsJEQWlFnFoAe0nSTL+a5bWulsAPgDRjvQhYso6uK5ETBQEL5thuFthjYtw0mOGlDTPsPP840l1Ou8IuMegzWcdAY5ct5MxN6zPCYKwh0D3jCnBeZMvtPA0TcYXrFlEucW8GHDlGQwRbtuOcyL153R6RQTHhuP8BrZ1+DoaPQtWDZKi+XbB+LOLrZZ+GKzppTylipzfsuF7d7PZrMvg9pLQnOWUIVuuOc5BHMcTg0n+sVGdED8Aqc9/dKVsZD+A8CxNR5f1PnP/dZA0iG9YUCkkC3vGDyOu52+oeXRJEaIhBQAAAABJRU5ErkJggg==" alt=""></span></li>
         <li class="title-center">{{center}}</li>
         <li class="title-right"><i :class="right"></i></li>
       </ul>
@@ -24,6 +24,11 @@ export default {
     right: {
       type: String,
       default: '请传right值'
+    }
+  },
+  methods: {
+    showCities () {
+      this.$emit('click-left')
     }
   }
 }
