@@ -1,7 +1,7 @@
 <template> <!-- vue实例外创建 -->
     <div>
         <navbar></navbar>
-        <headerbar :left="this.$store.state.cityName" center="资讯" @click-left="handleLeft()"></headerbar>
+        <headerbar :left="this.cityName" center="资讯" @click-left="handleLeft()"></headerbar>
         <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
           <van-list
           v-model="loading"
@@ -31,6 +31,7 @@ import BetterScroll from 'better-scroll'
 import { List, Cell, PullRefresh } from 'vant'
 import Vue from 'vue'
 import headerbar from '../components/headerbar'
+import { mapState } from 'vuex'
 
 Vue.use(List).use(Cell).use(PullRefresh)
 export default {
@@ -47,6 +48,9 @@ export default {
   components: {
     navbar,
     headerbar
+  },
+  computed: {
+    ...mapState('CityModule', ['cityName'])
   },
   methods: {
     onLoad () {

@@ -14,7 +14,7 @@ const module = {
   },
   actions: {
     getCinemaList (store, cityId) {
-      http({
+      return http({
         url: `gateway?cityId=${cityId}&ticketFlag=1&k=6051222`,
         headers: {
           'X-Host': 'mall.film-ticket.cinema.list'

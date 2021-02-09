@@ -6,7 +6,7 @@
               <headerbar :left="this.cityName" center="影院" right="iconfont icon-sousuo" @click-left="handleLeft()"></headerbar>
               <headerbottom left="全城" center="APP订票" right="最近去过"></headerbottom>
               <div class="cinema-layer"></div>
-              <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功">
+              <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh" success-text="刷新成功"> -->
                 <div class="cinema" :style="{height:height}">
                     <ul class="cinema-list">
                       <li v-for="data in this.cinemaList" :key="data.cinemaId" class="cinema-list-item">
@@ -17,7 +17,7 @@
                       </li>
                     </ul>
                 </div>
-              </van-pull-refresh>
+              <!-- </van-pull-refresh> -->
             </div>
        <!-- </transition> -->
     </div>
@@ -29,10 +29,10 @@ import navbar from '../components/navbar'
 import BetterScroll from 'better-scroll'
 import headerbar from '../components/headerbar'
 import headerbottom from '../components/headerbottom'
-import { PullRefresh } from 'vant'
+// import { PullRefresh } from 'vant'
 import { mapActions, mapMutations, mapState } from 'vuex'
 import Vue from 'vue'
-Vue.use(PullRefresh)
+// Vue.use(PullRefresh)
 Vue.filter('priceFilter', data => {
   const price = (data / 100).toFixed(1)
   if (price.endsWith('0')) {
@@ -52,8 +52,8 @@ Vue.filter('priceFilter', data => {
 export default {
   data () {
     return {
-      height: 0,
-      isLoading: false
+      height: 0
+      // isLoading: false
       // dataList: []
     }
   },
@@ -69,9 +69,9 @@ export default {
   methods: {
     ...mapActions('CinemaModule', ['getCinemaList']),
     ...mapMutations('CinemaModule', ['clearCinemaList']),
-    onRefresh () {
-      this.isLoading = false
-    },
+    // onRefresh () {
+    //   this.isLoading = false
+    // },
     handleLeft () {
       // console.log('我执行了')
       this.$router.push('/Cinema/City')
@@ -79,15 +79,17 @@ export default {
     }
   },
   mounted () {
+    this.height = (document.documentElement.clientHeight || document.body.clientHeight) - 144 + 'px'
     if (this.cinemaList.length === 0) {
       // console.log(this.cityName)
       this.getCinemaList(this.cityId).then(res => {
         this.$nextTick(() => {
-          new BetterScroll('.cinema', {
+          this.scroll = new BetterScroll('.cinema', {
             scrollbar: {
               fade: true
             }
           })
+          // console.log(this.scroll)
         })
       })
     } else {
@@ -100,7 +102,6 @@ export default {
         })
       })
     }
-    this.height = (document.documentElement.clientHeight || document.body.clientHeight) - 100 + 'px'
   }
 }
 </script>
@@ -126,9 +127,8 @@ export default {
     }
     .cinema{
       // padding-top: 94px;
-      overflow: hidden;background-color: #fff;box-sizing: border-box; position: relative;
+      overflow: hidden;background-color: #fff;left: 0;top: 0; position: relative;
       .cinema-list{
-        padding-bottom: 50px;
         // list-style: none;
         // margin-bottom: 100px;
         .cinema-list-item{

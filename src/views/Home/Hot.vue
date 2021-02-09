@@ -132,7 +132,7 @@ export default {
         // border-bottom: 1px solid #ededed;
         box-sizing: content-box!important;
         display: block!important;
-        overflow: auto!important;
+        // overflow: auto!important;
         line-height: 16px!important;
         .info-img{
           width: 66px;

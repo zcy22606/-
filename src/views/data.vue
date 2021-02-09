@@ -154,7 +154,7 @@
           transition: height 3s ease;
       }
       .hiden{
-          height: 37px!important;
+          // height: 37px!important;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
@@ -162,6 +162,7 @@
           // transition: height 3s ease;
       }
       .toggle{
+          padding: 10px 0;
           display: block;
           text-align: center;
           height: auto;
