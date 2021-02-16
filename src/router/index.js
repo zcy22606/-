@@ -55,6 +55,10 @@ const routes = [
     component: () => import('../views/login.vue')
   },
   {
+    path: '/reginster',
+    component: () => import('../views/reginster.vue')
+  },
+  {
     path: '/Cinema/City',
     component: () => import('../views/City.vue')
   },

@@ -43,8 +43,8 @@ export default {
   color: #797d82;
 }
 section{
-  margin-bottom: 50px;
-  // background-color: white;
+  padding-bottom: 50px;
+  background-color: white;
 }
  .home-header::after{
     content: '';
@@ -59,4 +59,5 @@ section{
       opacity: 0;
       transform: translateY(-50px);
   }
+
 </style>

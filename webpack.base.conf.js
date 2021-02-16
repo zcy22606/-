@@ -1,5 +1,5 @@
 model.exports = {
   externals: {
-    'AMap': 'AMap'
+    AMap: 'AMap'
   }
 }

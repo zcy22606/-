@@ -14,7 +14,7 @@
           name="用户名"
           label="用户名"
           placeholder="请输入您的用户名"
-          :rules="[{ required: true, message: '请填写用户名' }]"
+          :rules="[{ pattern: /^[a-zA-Z]\w{5,11}$/, message: '用户名只能由数字字母下划线组成，且只能以字母开头' }]"
         />
         <van-field
           v-model="password"
@@ -22,14 +22,14 @@
           name="密码"
           label="密码"
           placeholder="请输入您的密码"
-          :rules="[{ required: true, message: '请填写密码' }]"
+          :rules="[{ pattern: /\w{6,16}$/, message: '密码由8到16位数字字母下划线组成' }]"
         />
         <div class="reginster-info">
-          <span @click="reginster">还没有账号，马上去注册</span>
+          <span @click="login">已有账号，立即登录</span>
         </div>
         <div class="prompt-info" v-show="isShow">{{this.message}}</div>
         <div style="margin: 16px;">
-          <van-button round block type="info" native-type="submit" color="#ff5f16">登录</van-button>
+          <van-button round block type="info" native-type="submit" color="#ff5f16">注册</van-button>
         </div>
         <!-- <div style="margin: 16px;">
           <van-button round block type="info" native-type="submit" color="#ff5f16">登录</van-button>
@@ -42,7 +42,7 @@
 <script>
 import Vue from 'vue'
 import { Form, Button, Field, Toast } from 'vant'
-import http from '../util/login.js'
+import http from '../util/http.js'
 import qs from 'qs'
 
 Vue.use(Form).use(Button).use(Field)
@@ -52,41 +52,40 @@ export default {
       username: '',
       password: '',
       height: 0,
-      message: '用户名或密码错误',
-      isShow: false
+      message: '',
+      isShow: false,
+      pattern: ''
     }
   },
   methods: {
-    reginster () {
-      this.$router.push('/reginster')
+    login () {
+      this.$router.push('/login')
     },
     onSubmit (values) {
       const data = qs.stringify({
         username: this.username,
-        password: this.password
+        password: this.password,
+        addTime: new Date().getTime()
       })
       console.log('submit', values)
       http({
         method: 'post',
-        url: '/server/login.php',
+        url: '/server/reginster.php',
         data: data
       }).then(res => {
         if (res.data.code) {
           this.isShow = true
           this.message = res.data.message
         } else {
-          window.localStorage.setItem('abc', 'abc')
-          Toast({
-            message: '登录成功！',
+          Toast.loading({
+            message: '注册成功！',
             forbidClick: true,
             // overlay: true,
             duration: 1000
           })
+          this.$router.push('/login')
         }
-        if (window.localStorage.getItem('abc')) {
-          this.$router.push('/About')
-          Toast.clear()
-        }
+        Toast.clear()
       })
     }
   },
@@ -161,6 +160,39 @@ export default {
     margin-top: 100px 0;
   }
   .van-cell::after{
-    left: 0;
+    left: 4em;
   }
+</style>
+
+<style lang="scss">
+  .van-field__label{
+    margin-right: 0!important;
+    width: 4em;
+    height: 40px;
+    line-height: 40px;
+  }
+  .van-field__error-message{
+    padding-left: 8px;
+    font-size: 14px;
+  }
+  .van-field__control{
+    height: 40px;
+    padding-left: 8px;
+    line-height: 40px;
+    position: relative;
+    // border-bottom: 1px solid #ededed;
+  }
+  // .van-field__control::after{
+  //   content: "";
+  //   display: block;
+  //   border-bottom: 1px solid #ededed;
+  //   transform: scaleY(.5);
+  //   height: 1px;
+  //   position: absolute;
+  //   right: 0;
+  //   color: #ededed;
+  //   bottom: 0;
+  //   left: 0;
+  //   transform-origin: 0 100%;
+  // }
 </style>
