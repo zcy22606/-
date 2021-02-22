@@ -65,7 +65,7 @@ export default {
         username: this.username,
         password: this.password
       })
-      console.log('submit', values)
+      // console.log('submit', values)
       http({
         method: 'post',
         url: '/server/login.php',
@@ -75,7 +75,7 @@ export default {
           this.isShow = true
           this.message = res.data.message
         } else {
-          window.localStorage.setItem('abc', 'abc')
+          window.localStorage.setItem('abc', this.username)
           Toast({
             message: '登录成功！',
             forbidClick: true,
@@ -91,7 +91,7 @@ export default {
     }
   },
   mounted () {
-    this.height = (document.documentElement.clientHeight || document.body.clientHeight) - 50 + 'px'
+    this.height = (document.documentElement.clientHeight || document.body.clientHeight) + 'px'
   }
 }
 </script>

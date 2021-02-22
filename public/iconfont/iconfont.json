@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17711225",
+      "name": "勾",
+      "font_class": "gou",
+      "unicode": "e817",
+      "unicode_decimal": 59415
+    },
+    {
+      "icon_id": "4719749",
+      "name": "订单统计",
+      "font_class": "dingdantongji",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    },
+    {
+      "icon_id": "10043440",
+      "name": "余额",
+      "font_class": "xinbaniconshangchuan-",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "11391530",
+      "name": "红包",
+      "font_class": "hongbao",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "16135920",
+      "name": "设置",
+      "font_class": "shezhi",
+      "unicode": "e7de",
+      "unicode_decimal": 59358
+    },
+    {
+      "icon_id": "16416369",
+      "name": "卡券",
+      "font_class": "kaquan",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "17602796",
+      "name": "我的订单",
+      "font_class": "wodedingdan",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
       "icon_id": "731126",
       "name": "跳转",
       "font_class": "guanbi",

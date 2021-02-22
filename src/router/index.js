@@ -63,11 +63,11 @@ const routes = [
     component: () => import('../views/City.vue')
   },
   {
-    path: '/',
-    redirect: '/Home'
+    path: '/Cinema/Search',
+    component: () => import('../views/Search.vue')
   },
   {
-    path: '*',
+    path: '/',
     redirect: '/Home'
   }
 ]

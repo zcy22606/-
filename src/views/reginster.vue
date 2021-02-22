@@ -67,7 +67,7 @@ export default {
         password: this.password,
         addTime: new Date().getTime()
       })
-      console.log('submit', values)
+      // console.log('submit', values)
       http({
         method: 'post',
         url: '/server/reginster.php',
@@ -90,7 +90,7 @@ export default {
     }
   },
   mounted () {
-    this.height = (document.documentElement.clientHeight || document.body.clientHeight) - 50 + 'px'
+    this.height = (document.documentElement.clientHeight || document.body.clientHeight) + 'px'
   }
 }
 </script>

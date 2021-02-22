@@ -7,7 +7,7 @@
       finished-text="没有更多了"
       @load="onLoad"
       :immediate-check = "false"
-      offset=0
+      offset=300
       >
         <van-cell v-for="data in dataList" :key="data.filmId" @click="handleClick(data.filmId)">
           <div class="info-img"><img :src="data.poster" :alt="data.name"></div>
@@ -125,6 +125,7 @@ export default {
       box-sizing: border-box;
       // box-sizing: content-box;
       margin: 0 15px 0 15PX;
+      padding-bottom: 50px;
       .van-cell{
         height: 94px;
         padding: 15px 0px 15px 0;
